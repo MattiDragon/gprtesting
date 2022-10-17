@@ -1,0 +1,15 @@
+name: Testing
+
+on:
+  workflow_dispatch:
+    inputs:
+      description:
+        description: The description of the version
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Do the thing
+        run: echo "{{ github.event.inputs.description }}"
