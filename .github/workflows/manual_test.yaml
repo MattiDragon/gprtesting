@@ -18,12 +18,17 @@ jobs:
           THE_INPUT: "${{ inputs.description }}"
         run: | 
           import os
+          import random
+          import string
+          
           value = os.getenv("THE_INPUT")
           print(value)
           new_value = value.replace("\\n", "\n")
           print(new_value)
           
+          delimiter = "".join(random.choice(string.ascii_letters + string.digits) for i in range(30))
+          
           with open(os.environ["GITHUB_OUTPUT"], "w") as out:
-              out.write(f"out={new_value}")
+              out.write(f"out<<{delimiter}\nnew_value\n{delimiter}")
       - name: Test
         run: echo "${{ steps.calc.outputs.out }}"
