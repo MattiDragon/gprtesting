@@ -23,6 +23,6 @@ jobs:
           new_value = value.replace("\\n", "\n")
           print(new_value)
           
-          os.environ["GITHUB_OUTPUT"] = f"out={new_value}"
+          os.environ["GITHUB_OUTPUT"] = os.getenv["GITHUB_OUTPUT"] + f"out={new_value}"
       - name: Test
         run: echo "${{ steps.calc.outputs.out }}"
