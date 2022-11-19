@@ -11,5 +11,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Fix lines in changelog
+        id: changelog
+        uses: mad9000/actions-find-and-replace-string@2
+        with:
+          source: "${{ inputs.description }}"
+          find: "\\n"
+          replace: "\n"
       - name: Do the thing
-        run: echo "${{ github.event.inputs.description }}"
+        run: echo "${{ steps.changelog.outputs.value }}"
+      - name: Python time
+        shell: python
+        run: | 
+          import os
+          print("""${{ steps.changelog.outputs.value }}""")
+          print(os.getenv("INPUT_TEST"))
+        with:
+          test: "${{ steps.changelog.outputs.value }}"
