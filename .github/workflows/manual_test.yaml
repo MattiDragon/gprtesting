@@ -25,6 +25,3 @@ jobs:
         run: | 
           import os
           print("""${{ steps.changelog.outputs.value }}""")
-          print(os.getenv("INPUT_TEST"))
-        with:
-          test: "${{ steps.changelog.outputs.value }}"
