@@ -24,6 +24,6 @@ jobs:
           print(new_value)
           
           with open(os.environ["GITHUB_OUTPUT"], "w") as out:
-              out.write("f"out={new_value}"")
+              out.write(f"out={new_value}")
       - name: Test
         run: echo "${{ steps.calc.outputs.out }}"
