@@ -11,17 +11,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Fix lines in changelog
-        id: changelog
-        uses: mad9000/actions-find-and-replace-string@2
-        with:
-          source: "${{ inputs.description }}"
-          find: "\\n"
-          replace: "\n"
-      - name: Do the thing
-        run: echo "${{ steps.changelog.outputs.value }}"
       - name: Python time
+        id: calc
         shell: python
+        env:
+          THE_INPUT: "${{ inputs.description }}"
         run: | 
           import os
-          print("""${{ steps.changelog.outputs.value }}""")
+          value = os.getenv("THE_INPUT")
+          print(value)
+          new_value = value.replace("\\n", "\n")
+          print(new_value)
+          
+          os.environ[GITHUB_OUTPUT] = f"out={new_value}"
+      - name: Test
+        run: echo "${{ steps.calc.outputs.out }}"
