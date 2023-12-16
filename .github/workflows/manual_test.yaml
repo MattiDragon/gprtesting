@@ -37,5 +37,5 @@ jobs:
           properties: "${{steps.calc.outputs.out}}"
       - name: Test
         env:
-          THE_INPUT: "${{ format('{0} {1} {2}', inputs.test_input, steps.calc.outputs.out, steps.props.outputs.test_value) }}"
+          THE_INPUT: "${{ format('{0} {1} {2}', inputs.test_input, steps.calc.outputs.out || 'test' , steps.props.outputs.test_value) }}"
         run: echo $THE_INPUT
