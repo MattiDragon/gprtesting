@@ -42,4 +42,4 @@ jobs:
       - name: With with
         uses: logesh-kumar/fancy-echo@v1.2.0
         with:
-          who-to-greet: "${{ format('{0}{1}{2}', inputs.test_input, steps.calc.outputs.out || 'test' , steps.props.outputs.test_value) }}"
+          who-to-greet: "${{ format('{0}{1}{2}', inputs.test_input, steps.calc.outputs.out || 'test' , steps.props.outputs.test_value)}}"
