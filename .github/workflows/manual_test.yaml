@@ -28,7 +28,13 @@ jobs:
 
           with open(os.environ["GITHUB_OUTPUT"], "w") as out:
               out.write(f"out<<{delimiter}\n{value}\n{delimiter}")
+      - name: Read props
+        id: props
+        uses: christian-draeger/read-properties@1.1.0
+        with:
+          path: test.properties
+          properties: "${{steps.calc.outputs.out}}"
       - name: Test
         env:
-          THE_INPUT: "${{ format('{0} {1}', inputs.test_input, steps.calc.outputs.out) }}"
+          THE_INPUT: "${{ format('{0} {1} {2}', inputs.test_input, steps.calc.outputs.out, steps.props.outputs.test_value) }}"
         run: echo $THE_INPUT
