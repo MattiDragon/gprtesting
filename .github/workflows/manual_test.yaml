@@ -27,6 +27,6 @@ jobs:
           delimiter = "".join(random.choice(string.ascii_letters + string.digits) for i in range(30))
 
           with open(os.environ["GITHUB_OUTPUT"], "w") as out:
-              out.write(f"out<<{delimiter}\n{new_value}\n{delimiter}")
+              out.write(f"out<<{delimiter}\n{value}\n{delimiter}")
       - name: Test
         run: echo "${{ format('{0} {1}', inputs.test_input, steps.calc.outputs.out) }}"
