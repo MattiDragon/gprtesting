@@ -37,5 +37,9 @@ jobs:
           properties: "${{steps.calc.outputs.out}}"
       - name: Test
         env:
-          THE_INPUT: "${{ format('{0} {1} {2}', inputs.test_input, steps.calc.outputs.out || 'test' , steps.props.outputs.test_value) }}"
+          THE_INPUT: "${{ format('{0}{1}{2}', inputs.test_input, steps.calc.outputs.out || 'test' , steps.props.outputs.test_value) }}"
         run: echo $THE_INPUT
+      - name: With with
+        uses: logesh-kumar/fancy-echo@v1.2.0
+        with:
+          who-to-greet: "${{ format('{0}{1}{2}', inputs.test_input, steps.calc.outputs.out || 'test' , steps.props.outputs.test_value) }}"
