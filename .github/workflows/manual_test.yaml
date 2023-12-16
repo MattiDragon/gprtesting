@@ -11,5 +11,22 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Create output
+        id: calc
+        shell: python
+        env:
+          THE_INPUT: "${{ inputs.test_input }}"
+        run: |
+          import os
+          import random
+          import string
+
+          value = os.getenv("THE_INPUT")
+          print(value)
+
+          delimiter = "".join(random.choice(string.ascii_letters + string.digits) for i in range(30))
+
+          with open(os.environ["GITHUB_OUTPUT"], "w") as out:
+              out.write(f"out<<{delimiter}\n{new_value}\n{delimiter}")
       - name: Test
-        run: echo "${{ format('{0}', inputs.test_input) }}"
+        run: echo "${{ format('{0} {1}', inputs.test_input, steps.calc.outputs.out) }}"
