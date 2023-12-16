@@ -3,32 +3,13 @@ name: Testing
 on:
   workflow_dispatch:
     inputs:
-      description:
-        description: The description of the version
+      test_input:
+        description: "Test input"
         required: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Python time
-        id: calc
-        shell: python
-        env:
-          THE_INPUT: "${{ inputs.description }}"
-        run: | 
-          import os
-          import random
-          import string
-          
-          value = os.getenv("THE_INPUT")
-          print(value)
-          new_value = value.replace("\\n", "\n")
-          print(new_value)
-          
-          delimiter = "".join(random.choice(string.ascii_letters + string.digits) for i in range(30))
-          
-          with open(os.environ["GITHUB_OUTPUT"], "w") as out:
-              out.write(f"out<<{delimiter}\n{new_value}\n{delimiter}")
       - name: Test
-        run: echo "${{ steps.calc.outputs.out }}"
+        run: echo "${{ format('{0}', inputs.test_input) }}"
